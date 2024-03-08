@@ -1,14 +1,10 @@
 package com.example.produto.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.example.produto.entity.Produto;
 import com.example.produto.service.ProdutoService;
 import com.example.produto.vo.ProdutoVO;
 
@@ -23,19 +19,16 @@ public class ProdutoController {
     ProdutoService produtoSerProdutoService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Produto salvarProduto(@RequestBody @Valid ProdutoVO produtoVO) {
+    public ResponseEntity<Object> salvarProduto(@RequestBody @Valid ProdutoVO produtoVO) {
         return produtoSerProdutoService.salvarProduto(produtoVO);
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<Produto> pegarTodosProduto() {
+    public ResponseEntity<Object> pegarTodosProduto() {
         return produtoSerProdutoService.pegarTodosProduto();
     }
 
     @GetMapping("/{idProduto}")
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> pegarProduto(@PathVariable(value = "idProduto") UUID idProduto) {
         return produtoSerProdutoService.pegarProduto(idProduto);
     }
@@ -45,7 +38,6 @@ public class ProdutoController {
         return produtoSerProdutoService.deletarProduto(idProduto);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{idProduto}")
     public ResponseEntity<Object> atualizarProduto(@PathVariable(value = "idProduto") UUID idProduto,
             @RequestBody @Valid ProdutoVO produtoVO) {
