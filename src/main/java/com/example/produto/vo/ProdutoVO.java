@@ -11,12 +11,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import java.util.Date;
 
 @JsonPropertyOrder({
         "IdProduto",
         "nome",
         "valor",
-        "status"
+        "status",
+        "dataDeCriacao",
+        "dataDaUltimaAtualizacao",
 })
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -31,6 +34,9 @@ public class ProdutoVO {
     @NotNull(message = "Status do produto inválido")
     ProdutoStatus status;
 
+    Date dataDeCriacao;
+    Date dataDaUltimaAtualizacao;
+
     public ProdutoVO() {
     }
 
@@ -42,6 +48,8 @@ public class ProdutoVO {
         this.nome = produto.getNome();
         this.valor = produto.getValor();
         this.status = produto.getStatus();
+        this.dataDeCriacao = produto.getDataDeCriacao();
+        this.dataDaUltimaAtualizacao = produto.getDataDaUltimaAtualizacao();
     }
 
     public void setStatus(String status) {
