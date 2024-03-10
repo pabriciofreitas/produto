@@ -1,10 +1,9 @@
 package com.example.produto.vo;
 
 import java.math.BigDecimal;
-import java.util.Optional;
-import java.util.UUID;
 
 import com.example.produto.entity.Produto;
+import com.example.produto.enums.ProdutoStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -16,28 +15,21 @@ import lombok.Data;
 @JsonPropertyOrder({
         "IdProduto",
         "nome",
-        "valor"
+        "valor",
+        "status"
 })
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class ProdutoVO {
-    UUID IdProduto;
-    @NotBlank
+    Long IdProduto;
+    @NotBlank(message = "O nome do produto não pode ser vazio ou nulo.")
     String nome;
-    @NotNull
+    @NotNull(message = "O valor do produto inválido.")
     BigDecimal valor;
-
-    public Produto transformaEmProduto(Optional<Produto> produto) {
-        var newProduto = new Produto();
-        newProduto.setNome(this.nome);
-        newProduto.setValor(this.valor);
-        if (produto != null && produto.isPresent()) {
-            newProduto.setIdProduto(produto.get().getIdProduto());
-        }
-        return newProduto;
-    }
+    @NotNull(message = "Status do produto inválido")
+    ProdutoStatus status;
 
     public ProdutoVO() {
     }
@@ -49,5 +41,11 @@ public class ProdutoVO {
         this.IdProduto = produto.getIdProduto();
         this.nome = produto.getNome();
         this.valor = produto.getValor();
+        this.status = produto.getStatus();
     }
+
+    public void setStatus(String status) {
+        this.status = ProdutoStatus.fromString(status);
+    }
+
 }

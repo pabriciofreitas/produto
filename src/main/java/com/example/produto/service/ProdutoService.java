@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -17,28 +16,30 @@ import com.example.produto.vo.ProdutoVO;
 
 import jakarta.validation.Valid;
 
+@SuppressWarnings("null")
+
 @Service
 public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
     public ResponseEntity<Object> salvarProduto(@Valid ProdutoVO produtoVO) {
-        var produto = produtoRepository.save(produtoVO.transformaEmProduto(null));
+        var produto = produtoRepository.save(produtoVOParaProduto(produtoVO));
         return ResponseEntity.status(HttpStatus.CREATED).body(new ProdutoVO(produto));
     }
 
-    public ResponseEntity<Object> atualizarProduto(UUID idProduto, @Valid ProdutoVO produtoVO) {
+    public ResponseEntity<Object> atualizarProduto(Long idProduto, @Valid ProdutoVO produtoVO) {
         Optional<Produto> produtoO = produtoRepository.findById(idProduto);
         if (produtoO.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado");
         }
-
-        var produto = produtoVO.transformaEmProduto(produtoO);
-        return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
+        produtoVO.setIdProduto(idProduto);
+        var produto = produtoVOParaProduto(produtoVO);
+        return ResponseEntity.status(HttpStatus.OK).body(new ProdutoVO(produtoRepository.save(produto)));
 
     }
 
-    public ResponseEntity<Object> pegarProduto(UUID idProduto) {
+    public ResponseEntity<Object> pegarProduto(Long idProduto) {
         Optional<Produto> produtoO = produtoRepository.findById(idProduto);
         if (produtoO.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado");
@@ -46,7 +47,7 @@ public class ProdutoService {
         return ResponseEntity.status(HttpStatus.OK).body(new ProdutoVO(produtoO.get()));
     }
 
-    public ResponseEntity<Object> deletarProduto(UUID idProduto) {
+    public ResponseEntity<Object> deletarProduto(Long idProduto) {
         Optional<Produto> produtoO = produtoRepository.findById(idProduto);
         if (produtoO.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado");
@@ -64,5 +65,16 @@ public class ProdutoService {
             produtosVO.add(new ProdutoVO(produto));
         }
         return ResponseEntity.status(HttpStatus.OK).body(produtosVO);
+    }
+
+    public Produto produtoVOParaProduto(ProdutoVO produtoVO) {
+        var newProduto = new Produto();
+        newProduto.setNome(produtoVO.getNome());
+        newProduto.setValor(produtoVO.getValor());
+        newProduto.setStatus(produtoVO.getStatus());
+        if (produtoVO.getIdProduto() != null) {
+            newProduto.setIdProduto(produtoVO.getIdProduto());
+        }
+        return newProduto;
     }
 }

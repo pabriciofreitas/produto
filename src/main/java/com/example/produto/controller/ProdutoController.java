@@ -1,7 +1,5 @@
 package com.example.produto.controller;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -29,17 +27,17 @@ public class ProdutoController {
     }
 
     @GetMapping("/{idProduto}")
-    public ResponseEntity<Object> pegarProduto(@PathVariable(value = "idProduto") UUID idProduto) {
+    public ResponseEntity<Object> pegarProduto(@PathVariable(value = "idProduto") Long idProduto) {
         return produtoSerProdutoService.pegarProduto(idProduto);
     }
 
     @DeleteMapping("/{idProduto}")
-    public ResponseEntity<Object> deletarProduto(@PathVariable(value = "idProduto") UUID idProduto) {
+    public ResponseEntity<Object> deletarProduto(@PathVariable(value = "idProduto") Long idProduto) {
         return produtoSerProdutoService.deletarProduto(idProduto);
     }
 
     @PutMapping("/{idProduto}")
-    public ResponseEntity<Object> atualizarProduto(@PathVariable(value = "idProduto") UUID idProduto,
+    public ResponseEntity<Object> atualizarProduto(@PathVariable(value = "idProduto") Long idProduto,
             @RequestBody @Valid ProdutoVO produtoVO) {
         return produtoSerProdutoService.atualizarProduto(idProduto, produtoVO);
     }

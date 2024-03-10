@@ -1,50 +1,29 @@
 package com.example.produto.entity;
 
+import com.example.produto.enums.ProdutoStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.io.Serializable;
 import jakarta.persistence.*;
+import lombok.Data;
 
-import java.util.UUID;
 import java.math.BigDecimal;
 
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
-@Table(name = "TB_PRODUTO")
-public class Produto implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Table(name = "tb_produto")
+@Data
+public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idProduto;
+    @Column(name = "id_produto")
+    private Long idProduto;
+    @Column(name = "nome", nullable = false)
     private String nome;
+    @Column(name = "valor", nullable = false)
     private BigDecimal valor;
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ProdutoStatus status;
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
-    public UUID getIdProduto() {
-        return idProduto;
-    }
-
-    public void setIdProduto(UUID idProduto) {
-        this.idProduto = idProduto;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
 }
