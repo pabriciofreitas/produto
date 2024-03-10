@@ -26,7 +26,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/produto/046ae312-a054-4069-8411-a679be970333",
+					"raw": "http://localhost:8080/produto/552\n",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -34,7 +34,7 @@
 					"port": "8080",
 					"path": [
 						"produto",
-						"046ae312-a054-4069-8411-a679be970333"
+						"552\n"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -95,7 +95,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nome\": \"GELADINHO2\",\n\t\"valor\": 2\n}",
+					"raw": "{\n\t\"nome\": \"feijão2\",\n\t\"valor\": 5,\n    \"status\": \"ATIVO\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -138,7 +138,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nome\": \"GELAdão\",\n\t\"valor\": 2\n}",
+					"raw": "{\n    \"nome\": \"feijão\",\n    \"valor\": 5.00,\n    \"status\": \"ATIVO\",\n   \n    \"idProduto\": 552\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -146,7 +146,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/produto/3be0849b-8346-4c6c-a649-b7fa1031ad56",
+					"raw": "http://localhost:8080/produto/552",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -154,7 +154,7 @@
 					"port": "8080",
 					"path": [
 						"produto",
-						"3be0849b-8346-4c6c-a649-b7fa1031ad56"
+						"552"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -190,7 +190,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/produto/046ae312-a054-4069-8411-a679be970333",
+					"raw": "http://localhost:8080/produto/203",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -198,7 +198,7 @@
 					"port": "8080",
 					"path": [
 						"produto",
-						"046ae312-a054-4069-8411-a679be970333"
+						"203"
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
