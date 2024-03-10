@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.produto.entity.Produto;
+import com.example.produto.exception.ProdutoException;
 import com.example.produto.repository.ProdutoRepository;
 import com.example.produto.vo.ProdutoVO;
 
@@ -28,10 +29,11 @@ public class ProdutoService {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ProdutoVO(produto));
     }
 
-    public ResponseEntity<Object> atualizarProduto(Long idProduto, @Valid ProdutoVO produtoVO) {
+    public ResponseEntity<Object> atualizarProduto(Long idProduto, @Valid ProdutoVO produtoVO) throws ProdutoException {
         Optional<Produto> produtoO = produtoRepository.findById(idProduto);
         if (produtoO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado");
+            throw new ProdutoException("Produto não encontrado");
+
         }
         produtoVO.setIdProduto(idProduto);
         var produto = produtoVOParaProduto(produtoVO);
@@ -39,18 +41,20 @@ public class ProdutoService {
 
     }
 
-    public ResponseEntity<Object> pegarProduto(Long idProduto) {
+    public ResponseEntity<Object> pegarProduto(Long idProduto) throws ProdutoException {
         Optional<Produto> produtoO = produtoRepository.findById(idProduto);
         if (produtoO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado");
+            throw new ProdutoException("Produto não encontrado");
+
         }
         return ResponseEntity.status(HttpStatus.OK).body(new ProdutoVO(produtoO.get()));
     }
 
-    public ResponseEntity<Object> deletarProduto(Long idProduto) {
+    public ResponseEntity<Object> deletarProduto(Long idProduto) throws ProdutoException {
         Optional<Produto> produtoO = produtoRepository.findById(idProduto);
         if (produtoO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado");
+            throw new ProdutoException("Produto não encontrado");
+
         }
         produtoRepository.deleteById(idProduto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Produto apagado com sucesso");

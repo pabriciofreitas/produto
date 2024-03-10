@@ -3,6 +3,7 @@ package com.example.produto.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
+import com.example.produto.exception.ProdutoException;
 import com.example.produto.service.ProdutoService;
 import com.example.produto.vo.ProdutoVO;
 
@@ -27,18 +28,20 @@ public class ProdutoController {
     }
 
     @GetMapping("/{idProduto}")
-    public ResponseEntity<Object> pegarProduto(@PathVariable(value = "idProduto") Long idProduto) {
+    public ResponseEntity<Object> pegarProduto(@PathVariable(value = "idProduto") Long idProduto)
+            throws ProdutoException {
         return produtoSerProdutoService.pegarProduto(idProduto);
     }
 
     @DeleteMapping("/{idProduto}")
-    public ResponseEntity<Object> deletarProduto(@PathVariable(value = "idProduto") Long idProduto) {
+    public ResponseEntity<Object> deletarProduto(@PathVariable(value = "idProduto") Long idProduto)
+            throws ProdutoException {
         return produtoSerProdutoService.deletarProduto(idProduto);
     }
 
     @PutMapping("/{idProduto}")
     public ResponseEntity<Object> atualizarProduto(@PathVariable(value = "idProduto") Long idProduto,
-            @RequestBody @Valid ProdutoVO produtoVO) {
+            @RequestBody @Valid ProdutoVO produtoVO) throws ProdutoException {
         return produtoSerProdutoService.atualizarProduto(idProduto, produtoVO);
     }
 }
